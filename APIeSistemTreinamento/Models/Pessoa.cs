@@ -2,9 +2,8 @@
 
 namespace APIeSistemTreinamento.Models
 {
-    public class Pessoa
+    public class Pessoa : Entity
     {
-        public int Id { get; set; }
         public string Conjuge { get; set; }
         public string Mae { get; set; }
         public string Pai { get; set; }
@@ -18,7 +17,5 @@ namespace APIeSistemTreinamento.Models
         public string InscricaoEstadual { get; set; }
         public string InscricaoMunicipal { get; set; }
         public bool Ativo { get; set; }
-
-
     }
 }

@@ -1,6 +1,0 @@
-@ApiAutocom_HostAddress = https://localhost:7040/swagger/index.html
-
-GET {{ApiAutocom_HostAddress}}/Pessoa/
-Accept: application/json
-
-###

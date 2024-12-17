@@ -1,0 +1,6 @@
+@APIeSistemTreinamento_HostAddress = https://localhost:7040/swagger/index.html
+
+GET {{APIeSistemTreinamento_HostAddress}}/Pessoa/
+Accept: application/json
+
+###
