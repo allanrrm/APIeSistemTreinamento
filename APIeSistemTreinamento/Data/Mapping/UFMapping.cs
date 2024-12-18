@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace APIeSistemTreinamento.Data.Mapping
 {
-    public class UFMapping : IEntityTypeConfiguration<UF>
+    public class UFMapping : IEntityTypeConfiguration<Uf>
     {
-        public void Configure(EntityTypeBuilder<UF> builder)
+        public void Configure(EntityTypeBuilder<Uf> builder)
         {
             builder.ToTable("estado");
 

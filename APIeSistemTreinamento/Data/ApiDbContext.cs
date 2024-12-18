@@ -16,7 +16,7 @@ namespace APIeSistemTreinamento.Data
         public DbSet<Cfop> Cfop { get; set; }
         public DbSet<Unidade> Unidade { get; set; }
         public DbSet<Cidade> Cidade { get; set; }
-        public DbSet<UF> UF { get; set; }
+        public DbSet<Uf> UF { get; set; }
         public DbSet<Pais> Pais { get; set; }
         public DbSet<Empresa> Empresa { get; set; }
 

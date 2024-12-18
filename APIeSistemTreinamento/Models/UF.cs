@@ -2,7 +2,7 @@
 
 namespace APIeSistemTreinamento.Models
 {
-    public class UF : Entity
+    public class Uf : Entity
     {
         public int Id { get; set; }
         public string Nome { get; set; }

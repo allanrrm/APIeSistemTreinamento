@@ -1,5 +1,6 @@
 ﻿using APIeSistemTreinamento.Data;
 using APIeSistemTreinamento.Models;
+using APIeSistemTreinamento.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,101 +10,53 @@ namespace APIeSistemTreinamento.Controllers
     [Route("api/Pessoa")]
     public class PessoaController : ControllerBase
     {
-        private readonly ApiDbContext _context;
-
-        public PessoaController(ApiDbContext context)
-        {
-            _context = context;
-        }
+        private readonly PessoaRepository _pessoaRepository;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pessoa>>> GetPessoa()
+        public async Task<IEnumerable<Pessoa>> BuscarTodos()
         {
-            return await _context.Pessoa.ToListAsync();
-        }
-
-        [HttpGet("{cpfCnpj}")]
-        public async Task<ActionResult<Pessoa>> GetPessoa(string cpfCnpj)
-        {
-            var pessoa = await _context.Pessoa.FirstOrDefaultAsync(p => p.CpfCnpj == cpfCnpj);
-            if (pessoa == null)
-            {
-                return NotFound();
-            }
-            return pessoa;
+            return await _pessoaRepository.BuscarTodos();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Pessoa>> GetPessoa(int id)
+        public async Task<ActionResult<Pessoa>> BuscarPorId(int id)
         {
-            var pessoa = await _context.Pessoa.FirstOrDefaultAsync(p => p.Id == id);
-            if (pessoa == null)
+            var Pessoa = await _pessoaRepository.BuscarPorId(id);
+            if (Pessoa == null)
             {
                 return NotFound();
             }
-            return pessoa;
+            return Pessoa;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Pessoa>> IncluirPessoa(Pessoa pessoa)
+        [HttpGet("{nomeCidade}")]
+        public async Task<ActionResult<Pessoa>> BuscarPorNome(string nomePessoa)
         {
-            if (_context.Pessoa == null)
+            var Pessoa = await _pessoaRepository.BuscarPorNome(nomePessoa);
+            if (Pessoa == null)
             {
-                return Problem("Erro ao criar uma pessoa, contate o suporte");
+                return NotFound();
             }
-
-            if (!ModelState.IsValid)
-            {
-                return ValidationProblem(new ValidationProblemDetails(ModelState)
-                {
-                    Title = "Um ou mais erros de ,validação ocorreram"
-                });
-            }
-
-            _context.Pessoa.Add(pessoa);
-            await _context.SaveChangesAsync();
-
+            return Pessoa;
+        }
+        [HttpPost]
+        public async Task<ActionResult<Pessoa>> Adicionar(Pessoa pessoa)
+        {
+            await _pessoaRepository.Adicionar(pessoa);
             return Created();
         }
 
         [HttpPut]
-        public async Task<ActionResult<Pessoa>> AtualizarPessoa(int id, Pessoa pessoa)
+        public async Task<ActionResult<Pessoa>> Atualizar(Pessoa pessoa)
         {
-            if (id != pessoa.Id)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return ValidationProblem(new ValidationProblemDetails(ModelState)
-                {
-                    Title = "Um ou mais erros de validação ocorreram"
-                });
-            }
-
-            _context.Entry(pessoa).State = EntityState.Modified;
-
-            await _context.SaveChangesAsync();
-
+            await _pessoaRepository.Atualizar(pessoa);
             return NoContent();
         }
 
         [HttpDelete]
-        public async Task<ActionResult> DeletarPessoa(int id)
+        public async Task<ActionResult<Pessoa>> Deletar(int id)
         {
-            if (_context.Pessoa == null)
-            {
-                NotFound();
-            }
-            var pessoa = await _context.Pessoa.FindAsync(id);
-
-            if (pessoa == null)
-            {
-                return NotFound();
-            }
-            _context.Pessoa.Remove(pessoa);
-            await _context.SaveChangesAsync();
+            await _pessoaRepository.Remover(id);
             return NoContent();
         }
     }

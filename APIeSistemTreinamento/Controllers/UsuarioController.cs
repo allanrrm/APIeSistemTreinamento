@@ -18,15 +18,10 @@ namespace APIeSistemTreinamento.Controllers
             _usuarioRepository = usuarioRepository;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Usuario>> ObterTodos()
-        {
-            return await _usuarioRepository.BuscarTodos();
-        }
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Usuario>> ObterUsuarioEmpresa(int id)
+        public async Task<ActionResult<object>> ObterUsuarioEmpresa(int id, string senha)
         {
-            var nomenclaturaEmpresa = await _usuarioRepository.ObterUsuarioEmpresa(id);
+            var nomenclaturaEmpresa = await _usuarioRepository.ObterUsuarioEmpresa(id, senha);
 
             if (nomenclaturaEmpresa == null)
             {
@@ -34,22 +29,6 @@ namespace APIeSistemTreinamento.Controllers
             }
             return nomenclaturaEmpresa;
         }
-        //[HttpDelete]
-        //public async Task<ActionResult> DeletarUsuario(int id)
-        //{
-        //    if (_context.Usuario == null)
-        //    {
-        //        NotFound();
-        //    }
-        //    var usuario = await _context.Usuario.FindAsync(id);
-
-        //    if (usuario == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _context.Usuario.Remove(usuario);
-        //    await _context.SaveChangesAsync();
-        //    return NoContent();
-        //}
+    
     }
 }

@@ -20,13 +20,13 @@ namespace APIeSistemTreinamento.Repository
             
         }
 
-        public async Task<IEnumerable<TEntity>> BuscarTodos()
+        public async Task<List<TEntity>> BuscarTodos()
         {
             var empresas = await _dbSet.ToListAsync();
             return empresas;
         }
 
-        public async Task<ActionResult<TEntity>> BuscarPorId(int id)
+        public async Task<TEntity> BuscarPorId(int id)
         {
             var cfop = await _dbSet.FirstOrDefaultAsync(p => p.Id == id);
             return cfop;

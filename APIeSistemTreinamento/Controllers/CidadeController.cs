@@ -40,7 +40,26 @@ namespace APIeSistemTreinamento.Controllers
             }
             return cidade;
         }
+        [HttpPost]
+        public async Task<ActionResult<Cidade>> Adicionar(Cidade cidade)
+        {
+            await _cidadeRepository.Adicionar(cidade);
+            return Created();
+        }
 
+        [HttpPut]
+        public async Task<ActionResult<Cidade>> Atualizar(Cidade cidade)
+        {
+            await _cidadeRepository.Atualizar(cidade);
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<Cidade>> Deletar(int id)
+        {
+            await _cidadeRepository.Remover(id);
+            return NoContent();
+        }
 
 
     }

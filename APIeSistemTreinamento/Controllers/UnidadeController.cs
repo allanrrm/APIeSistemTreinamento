@@ -1,5 +1,6 @@
 ﻿using APIeSistemTreinamento.Data;
 using APIeSistemTreinamento.Models;
+using APIeSistemTreinamento.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,23 +10,18 @@ namespace APIeSistemTreinamento.Controllers
     [Route("api/Unidade")]
     public class UnidadeController : ControllerBase
     {
-        private readonly ApiDbContext _context;
-
-        public UnidadeController(ApiDbContext context)
-        {
-            _context = context;
-        }
+        private readonly UnidadeRepository _unidadeRepository;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Unidade>>> BuscarUnidade()
+        public async Task<IEnumerable<Unidade>> BuscarTodos()
         {
-            return await _context.Unidade.ToListAsync();
+            return await _unidadeRepository.BuscarTodos();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Unidade>> BuscarUnidade(int id)
+        public async Task<ActionResult<Unidade>> BuscarPorId(int id)
         {
-            var unidade = await _context.Unidade.FirstOrDefaultAsync(p => p.Id == id);
+            var unidade = await _unidadeRepository.BuscarPorId(id);
             if (unidade == null)
             {
                 return NotFound();
@@ -33,78 +29,36 @@ namespace APIeSistemTreinamento.Controllers
             return unidade;
         }
 
-        [HttpGet("codigo/{simboloUnidade}")]
-        public async Task<ActionResult<Unidade>> BuscarUnidade(string simboloUnidade)
+        [HttpGet("{nomeCidade}")]
+        public async Task<ActionResult<Unidade>> BuscarPorNome(string nomeUnidade)
         {
-            var unidade = await _context.Unidade.FirstOrDefaultAsync(p => p.Simbolo == simboloUnidade);
+            var unidade = await _unidadeRepository.BuscarPorNome(nomeUnidade);
             if (unidade == null)
             {
                 return NotFound();
             }
             return unidade;
         }
-
         [HttpPost]
-        public async Task<ActionResult<Unidade>> IncluirUnidade(Unidade simboloUnidade)
+        public async Task<ActionResult<Unidade>> Adicionar(Unidade unidade)
         {
-            if (_context.Unidade == null)
-            {
-                return Problem("Erro ao criar uma unidade, contate o suporte");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return ValidationProblem(new ValidationProblemDetails(ModelState)
-                {
-                    Title = "Um ou mais erros de ,validação ocorreram"
-                });
-            }
-
-            _context.Unidade.Add(simboloUnidade);
-            await _context.SaveChangesAsync();
-
+            await _unidadeRepository.Adicionar(unidade);
             return Created();
         }
 
         [HttpPut]
-        public async Task<ActionResult<Unidade>> AtualizarUnidade(int id, Unidade simboloUnidade)
+        public async Task<ActionResult<Unidade>> Atualizar(Unidade unidade)
         {
-            if (id != simboloUnidade.Id)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return ValidationProblem(new ValidationProblemDetails(ModelState)
-                {
-                    Title = "Um ou mais erros de validação ocorreram"
-                });
-            }
-
-            _context.Entry(simboloUnidade).State = EntityState.Modified;
-
-            await _context.SaveChangesAsync();
-
+            await _unidadeRepository.Atualizar(unidade);
             return NoContent();
         }
 
         [HttpDelete]
-        public async Task<ActionResult> DeletarUnidade(int id)
+        public async Task<ActionResult<Unidade>> Deletar(int id)
         {
-            if (_context.Unidade == null)
-            {
-                NotFound();
-            }
-            var simboloUnidade = await _context.Unidade.FindAsync(id);
-
-            if (simboloUnidade == null)
-            {
-                return NotFound();
-            }
-            _context.Unidade.Remove(simboloUnidade);
-            await _context.SaveChangesAsync();
+            await _unidadeRepository.Remover(id);
             return NoContent();
         }
+
     }
 }

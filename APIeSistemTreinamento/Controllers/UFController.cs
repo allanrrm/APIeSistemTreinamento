@@ -1,5 +1,6 @@
 ﻿using APIeSistemTreinamento.Data;
 using APIeSistemTreinamento.Models;
+using APIeSistemTreinamento.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.EntityFrameworkCore;
@@ -7,26 +8,26 @@ using Microsoft.EntityFrameworkCore;
 namespace APIeSistemTreinamento.Controllers
 {
     [ApiController]
-    [Route("api/UF")]
-    public class UFController : ControllerBase
+    [Route("api/Uf")]
+    public class UfController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly UfRepository _ufRepository;
 
-        public UFController(ApiDbContext context)
+        public UfController(UfRepository ufRepository)
         {
-            _context = context;
+            _ufRepository = ufRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UF>>> GetUF()
+        public async Task<IEnumerable<Uf>> BuscarTodos()
         {
-            return await _context.UF.ToListAsync();
+            return await _ufRepository.BuscarTodos();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<UF>> GetUF(int id)
+        public async Task<ActionResult<Uf>> BuscarPorId(int id)
         {
-            var estado = await _context.UF.FirstOrDefaultAsync(p => p.Id == id);
+            var estado = await _ufRepository.BuscarPorId(id);
             if (estado == null)
             {
                 return NotFound();
@@ -34,15 +35,35 @@ namespace APIeSistemTreinamento.Controllers
             return estado;
         }
 
-        [HttpGet("{siglaUf}")]
-        public async Task<ActionResult<UF>> GetUF(string siglaUf)
+        [HttpGet("{nomeUf}")]
+        public async Task<ActionResult<Uf>> BuscarPorNome(string nomeUf)
         {
-            var estado = await _context.UF.FirstOrDefaultAsync(p => p.SiglaUF == siglaUf);
+            var estado = await _ufRepository.BuscarPorNome(nomeUf);
             if (estado == null)
             {
                 return NotFound();
             }
             return estado;
+        }
+        [HttpPost]
+        public async Task<ActionResult<Uf>> Adicionar(Uf uf)
+        {
+            await _ufRepository.Adicionar(uf);
+            return Created();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Uf>> Atualizar(Uf uf)
+        {
+            await _ufRepository.Atualizar(uf);
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<Uf>> Deletar(int id)
+        {
+            await _ufRepository.Remover(id);
+            return NoContent();
         }
 
 

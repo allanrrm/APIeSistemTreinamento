@@ -37,17 +37,5 @@ namespace APIeSistemTreinamento.Controllers
             return nomenclaturaEmpresa;
         }
 
-        //[HttpGet("{nomeEmpresa}")]
-        //public async Task<ActionResult<Empresa>> GetUF(string nomeEmpresa)
-        //{
-        //    var nomenclaturaEmpresa = await _context.Empresa.FirstOrDefaultAsync(p => p.Nomenclatura == nomeEmpresa);
-        //    if (nomenclaturaEmpresa == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return nomenclaturaEmpresa;
-        //}
-
-
     }
 }

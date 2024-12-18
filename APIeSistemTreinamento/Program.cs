@@ -1,4 +1,5 @@
 using APIeSistemTreinamento.Data;
+using APIeSistemTreinamento.Data.Configuration;
 using APIeSistemTreinamento.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,15 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddScoped<EmpresaRepository>();
-builder.Services.AddScoped<UsuarioRepository>();
-builder.Services.AddScoped<CfopRepository>();
-builder.Services.AddScoped<CidadeRepository>();
-
-
-
-
-
+builder.Services.ResolveDependencies();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
