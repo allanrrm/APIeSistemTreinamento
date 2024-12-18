@@ -18,10 +18,10 @@ namespace APIeSistemTreinamento.Controllers
             _usuarioRepository = usuarioRepository;
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<object>> ObterUsuarioEmpresa(int id, string senha)
+        [HttpGet("{login}")]
+        public async Task<ActionResult<object>> ObterUsuarioEmpresa(string login, string senha)
         {
-            var nomenclaturaEmpresa = await _usuarioRepository.ObterUsuarioEmpresa(id, senha);
+            var nomenclaturaEmpresa = await _usuarioRepository.ObterUsuarioEmpresa(login, senha);
 
             if (nomenclaturaEmpresa == null)
             {

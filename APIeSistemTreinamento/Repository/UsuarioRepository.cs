@@ -11,12 +11,14 @@ namespace APIeSistemTreinamento.Repository
 
         }
 
-        public async Task<object> ObterUsuarioEmpresa(int id, string senha)
+        public async Task<object> ObterUsuarioEmpresa(string login, string senha)
         {
+
+
             var usuarioEmpresa = await _dbContext.Usuario.AsNoTracking()
                 .Include(c => c.Empresas)     
                 .ThenInclude(c => c.Pessoa)
-                .Where(c => c.Id == id && c.Senha == senha)
+                .Where(c => c.Login == login && c.Senha == senha)
                 .Select ( x => new
                 {
                     NomeUsuario = x.Pessoa.NomeRazaoSocial,

@@ -9,10 +9,10 @@ namespace APIeSistemTreinamento.Models
         public string SiglaUF { get; set; }
         public int CodigoIBGE { get; set; }
         public bool Ativo { get; set; }
-        public double AliqIcmsInterna { get; set; }   
-        public List<Cidade> Cidades { get; set; }
+        public double AliqIcmsInterna { get; set; }
+        public virtual List<Cidade> Cidades { get; set; } = [];
         public int IdPais { get; set; }
-        public Pais Pais { get; set; }
+        public virtual Pais Pais { get; set; } = null;
 
          //id integer NOT NULL DEFAULT nextval('estado_id_seq'::regclass),
          //id_pais integer NOT NULL DEFAULT 0,

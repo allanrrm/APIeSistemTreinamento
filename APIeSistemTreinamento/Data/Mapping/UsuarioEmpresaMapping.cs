@@ -26,16 +26,6 @@ namespace APIeSistemTreinamento.Data.Mapping
                 .WithMany()
                 .HasForeignKey(e => e.IdUsuario);
 
-
-
-
-            //          id integer NOT NULL DEFAULT nextval('usuario_empresa_id_seq'::regclass),
-            //id_usuario integer NOT NULL DEFAULT 0,
-            //id_empresa integer NOT NULL DEFAULT 0,
-            //ativo boolean NOT NULL DEFAULT false,
-            //integrar integer NOT NULL DEFAULT 0,
-            //apenas_dav boolean NOT NULL DEFAULT false,
-            //apenas_nfe boolean NOT NULL DEFAULT false,
         }
     }
 }

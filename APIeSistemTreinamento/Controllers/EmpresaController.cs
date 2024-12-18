@@ -11,25 +11,25 @@ namespace APIeSistemTreinamento.Controllers
     [Route("api/Empresa")]
     public class EmpresaController : ControllerBase
     {
-        private readonly EmpresaRepository _fornecedorRepository;
+        private readonly EmpresaRepository _empresaRepository;
 
-        public EmpresaController(EmpresaRepository fornecedorRepository)
+        public EmpresaController(EmpresaRepository empresaRepository)
         {
-            _fornecedorRepository = fornecedorRepository;
+            _empresaRepository = empresaRepository;
         }
 
 
         [HttpGet]
         public async Task<IEnumerable<Empresa>> BuscarTodos()
         {
-            return await _fornecedorRepository.BuscarTodos();
+            return await _empresaRepository.BuscarTodos();
         }
 
 
         [HttpGet("codigo/{id:int}")]
         public async Task<ActionResult<Empresa>> ObterPessoaEmpresa(int id)
         {
-            var nomenclaturaEmpresa = await _fornecedorRepository.ObterPessoaEmpresa(id);
+            var nomenclaturaEmpresa = await _empresaRepository.ObterPessoaEmpresa(id);
             if (nomenclaturaEmpresa == null)
             {
                 return NotFound();

@@ -9,8 +9,8 @@ namespace APIeSistemTreinamento.Data.Mapping
         public void Configure(EntityTypeBuilder<Pessoa> builder)
         {
             builder.ToTable("pessoa");
-            builder.HasKey(p => p.Id);
-            builder.Property(p => p.Id).HasColumnName("id");
+            builder.HasKey(pes => pes.Id);
+            builder.Property(pes => pes.Id).HasColumnName("id").ValueGeneratedOnAdd().IsRequired();           
             builder.Property(p => p.Conjuge).HasColumnName("conjuge").HasDefaultValue(null);
             builder.Property(p => p.Mae).HasColumnName("mae").HasColumnType("VARCHAR(100)").HasDefaultValue();
             builder.Property(p => p.Pai).HasColumnName("pai").HasDefaultValue("3");
@@ -26,8 +26,7 @@ namespace APIeSistemTreinamento.Data.Mapping
             builder.Property(p => p.Ativo).HasColumnName("ativo").HasColumnType("BOOLEAN").IsRequired();
 
 
-            //Blog => Pessoa
-            //BlogHeader => Empresa
+
         }
     }
 }

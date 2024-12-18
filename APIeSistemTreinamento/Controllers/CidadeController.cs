@@ -13,6 +13,11 @@ namespace APIeSistemTreinamento.Controllers
     {
         private readonly CidadeRepository _cidadeRepository;
 
+        public CidadeController(CidadeRepository cidadeRepository)
+        {
+            _cidadeRepository = cidadeRepository;
+        }
+
         [HttpGet]
         public async Task<IEnumerable<Cidade>> BuscarTodos()
         {

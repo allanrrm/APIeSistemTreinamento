@@ -7,7 +7,7 @@ namespace APIeSistemTreinamento.Models
     {
 
         public Pessoa Pessoa { get; set; }
-        public int IdContador { get; set; }
+        public int? IdContador { get; set; }
         public string Codigo { get; set; }
         public string Nomenclatura { get; set; }
         public string RazaoSocialSintegra { get; set; }

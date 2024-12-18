@@ -7,7 +7,7 @@ namespace APIeSistemTreinamento.Models
 
         public int Id { get; set; }
         public int IdEstado { get; set; }
-        public Uf UF { get; set; }
+        public virtual Uf UF { get; set; }
         public string Nome { get; set; }
         public int CodigoIBGE { get; set; }
         public bool Ativo { get; set; }

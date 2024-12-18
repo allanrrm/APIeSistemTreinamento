@@ -12,6 +12,12 @@ namespace APIeSistemTreinamento.Controllers
     {
         private readonly PessoaRepository _pessoaRepository;
 
+        public PessoaController(PessoaRepository pessoaRepository)
+        {
+            _pessoaRepository = pessoaRepository;
+        }
+
+
         [HttpGet]
         public async Task<IEnumerable<Pessoa>> BuscarTodos()
         {

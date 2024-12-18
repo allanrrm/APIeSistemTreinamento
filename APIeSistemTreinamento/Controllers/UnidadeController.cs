@@ -12,6 +12,11 @@ namespace APIeSistemTreinamento.Controllers
     {
         private readonly UnidadeRepository _unidadeRepository;
 
+        public UnidadeController(UnidadeRepository unidadeRepository)
+        {
+            _unidadeRepository = unidadeRepository;
+        }
+
         [HttpGet]
         public async Task<IEnumerable<Unidade>> BuscarTodos()
         {
@@ -29,15 +34,15 @@ namespace APIeSistemTreinamento.Controllers
             return unidade;
         }
 
-        [HttpGet("{nomeCidade}")]
-        public async Task<ActionResult<Unidade>> BuscarPorNome(string nomeUnidade)
+        [HttpGet("{unidade}")]
+        public async Task<ActionResult<Unidade>> BuscarPorNome(string unidade)
         {
-            var unidade = await _unidadeRepository.BuscarPorNome(nomeUnidade);
-            if (unidade == null)
+            var unidadePesquisar = await _unidadeRepository.BuscarPorNome(unidade);
+            if (unidadePesquisar == null)
             {
                 return NotFound();
             }
-            return unidade;
+            return unidadePesquisar;
         }
         [HttpPost]
         public async Task<ActionResult<Unidade>> Adicionar(Unidade unidade)
